@@ -18,7 +18,7 @@ class Net(nn.Module):
             stride,
             padding,
             dilation,
-            groups=groups * radix,
+            groups=groups,
             bias=bias,
             **kwargs,
         )
@@ -44,7 +44,7 @@ class Net(nn.Module):
             stride,
             padding,
             dilation,
-            groups=groups * radix,
+            groups=groups,
             bias=bias,
             **kwargs,
         )
