@@ -60,8 +60,7 @@ class Net(nn.Module):
           return out
         else:
           # 3D Conv
-          B, RC, D, H, W = x.shape
-          B, C, H, W = x.shape # <---- like this !
+          B, RC, D, H, W = x.shape # <---- like this !
           out = some_operations(x)
           ...
           # Replace the 2D operation with 3D, 
