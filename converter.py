@@ -17,8 +17,20 @@ def convert2d_to_3d(model):
                 kernel_size=fix_2d_to_3d(module.kernel_size),
                 stride=fix_2d_to_3d(module.stride),
                 padding=fix_2d_to_3d(module.padding),
+                dilation=fix_2d_to_3d(module.dilation),
             )
             setattr(model, name, conv3d)
+        if isinstance(module, nn.ConvTranspose2d):
+            convtranspose3d = nn.ConvTranspose3d(
+                module.in_channels,
+                module.out_channels,
+                kernel_size=fix_2d_to_3d(module.kernel_size),
+                stride=fix_2d_to_3d(module.stride),
+                padding=fix_2d_to_3d(module.padding),
+                dilation=fix_2d_to_3d(module.dilation),
+                output_padding=fix_2d_to_3d(module.output_padding),
+            )
+            setattr(model, name, convtranspose3d)
         elif isinstance(module, nn.BatchNorm2d):
             # replace with a batchnorm3d layer
             batchnorm3d = nn.BatchNorm3d(fix_2d_to_3d(module.num_features))
@@ -47,6 +59,7 @@ def convert2d_to_3d(model):
             # recurse for submodules
             convert2d_to_3d(module)
     return model
+
 
 
 if __name__ == "__main__":
